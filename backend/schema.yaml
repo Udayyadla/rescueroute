@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: Excess Food Pickup API
+  version: 1.0.0
+  description: Backend APIs for food donations, charity reservations, volunteer pickups,
+    notifications, and delivery tracking.
+paths:
+  /api/health/:
+    get:
+      operationId: health_retrieve
+      description: Checks whether the Django application and can execute a lightweight
+        query.
+      summary: Application readiness check
+      tags:
+      - health
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadinessResponse'
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadinessResponse'
+          description: Database unavailable
+  /api/health/liveness:
+    get:
+      operationId: health_liveness_retrieve
+      description: Checks whether the Django application can respond to HTTP requests.
+      summary: Application liveness check
+      tags:
+      - health
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LivenessResponse'
+          description: ''
+components:
+  schemas:
+    LivenessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        service:
+          type: string
+      required:
+      - service
+      - status
+    ReadinessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        database:
+          type: string
+      required:
+      - database
+      - status

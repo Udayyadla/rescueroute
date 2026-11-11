@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     # Third-party apps
     "rest_framework",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
 
     #project apps
     "accounts",
@@ -51,7 +53,8 @@ INSTALLED_APPS = [
     "reservations",
     "notifications",
     "ai_assist",
-    "audit"
+    "audit",
+    "health",
 ]
 
 MIDDLEWARE = [
@@ -154,3 +157,25 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+REST_FRAMEWORK ={
+    "DEFAULT_SCHEMA_CLASS":
+        "drf_spectacular.openapi.AutoSchema",
+
+        }
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Excess Food Pickup API",
+    "DESCRIPTION": (
+        "Backend APIs for food donations, "
+        "charity reservations, volunteer pickups, "
+        "notifications, and delivery tracking."
+        
+        
+        ),
+    "VERSION":"1.0.0",
+    "SERVE_INCLUDE_SCHEMA":False,
+    "SWAGGER_UI_DIST":"SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF":"SIDECAR",
+    #Redoc assets
+    "REDOC_DIST":"SIDECAR"
+    }
