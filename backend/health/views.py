@@ -82,3 +82,31 @@ def readiness_check(request):
         },
         status=status.HTTP_200_OK,
     )
+
+@extend_schema(
+    summary="Test server error handling",
+    description=(
+        "Endpoint to test server error handling by raising a ZeroDivisionError."
+    ),
+    responses={
+        500: OpenApiResponse(
+            response=None, description="Internal Server Error"
+        ),
+    },
+    auth=[],
+)
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def test_server_error(request):
+    """
+    Endpoint to test server error handling.
+    """
+
+    total_food = 100
+    delievered_food = 0
+
+    percentage = (total_food / delievered_food) * 100  # This will raise a ZeroDivisionError
+    return Response(
+        {
+            "message": f"Percentage of delivered food: {percentage}%",
+        })
