@@ -56,3 +56,5 @@ urlpatterns += [
     path("api/test-not-found/", TestNotFoundView.as_view(), name="test-not-found"),
     path("api/test-permission/", TestPermissionView.as_view(), name="test-permisson"),
 ]
+
+handler500 = "config.error_views.server_error"

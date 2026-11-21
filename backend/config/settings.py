@@ -27,9 +27,17 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["testserver", "localhost", "127.0.0.1", "backend", "backend:8000", "backend:8001", "backend:8002"]
+ALLOWED_HOSTS = [
+    "testserver",
+    "localhost",
+    "127.0.0.1",
+    "backend",
+    "backend:8000",
+    "backend:8001",
+    "backend:8002",
+]
 
 
 # Application definition
@@ -174,4 +182,33 @@ SPECTACULAR_SETTINGS = {
     "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
     # Redoc assets
     "REDOC_DIST": "SIDECAR",
+}
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": ("{levelname} {asctime} " "{name} {message}"),
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+    },
+    "loggers": {
+        "health": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
 }
