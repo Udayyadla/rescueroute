@@ -21,7 +21,13 @@ def custom_exception_handler(exc, context):
 
     elif isinstance(exc, (NotAuthenticated, AuthenticationFailed)):
         code = "AUTHENTICATION_ERROR"
-        message = str(exc.detail)
+        detail = (
+            response.data.get("detail") if isinstance(response.data, dict) else None
+        )
+        if isinstance(detail, str):
+            message = detail
+        else:
+            message = "Invalid or expired authentication token."
         details = None
 
     elif isinstance(exc, PermissionDenied):
@@ -34,7 +40,7 @@ def custom_exception_handler(exc, context):
         message = str(exc.detail)
         details = None
     else:
-        code = ("API_ERROR",)
+        code = "API_ERROR"
         message = "An API error occurred."
         details = response.data
 
