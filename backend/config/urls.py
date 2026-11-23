@@ -45,6 +45,7 @@ urlpatterns = [
     ),
     # ReDoc
     path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    path("api/auth/",include("accounts.urls"))
 ]
 urlpatterns += [
     path("api/test-validation/", TestValidationView.as_view(), name="test-validation"),
